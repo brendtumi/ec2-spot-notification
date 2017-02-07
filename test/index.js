@@ -2,22 +2,22 @@ var SpotNotification = require("../index");
 
 var spot = SpotNotification.SpotNotifier;
 
-spot.on("termination", date => {
+spot.on("termination", function (date) {
     console.log("termination", date);
 });
-spot.on("termination-cancelled", date => {
+spot.on("termination-cancelled", function (date) {
     console.log("termination-cancelled", date);
 });
-spot.on("termination-not-detected", error => {
+spot.on("termination-not-detected", function (error) {
     console.log("termination-not-detected", error);
 });
 
 spot.instanceId()
-    .then((id) => {
+    .then(function (id) {
         console.log("instanceId", id);
         process.exit(0);
     })
-    .catch((err) => {
+    .catch(function (err) {
         console.error("instanceId", err);
     });
 
