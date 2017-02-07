@@ -19,7 +19,8 @@ spot.instanceId()
     .catch(function (err) {
         console.error("instanceId", err);
     });
-
-setTimeout(function () {
-    process.exit(0);
-}, 20000);
+/*
+ setTimeout(function () {
+ process.exit(0);
+ }, 20000);
+ //*/
