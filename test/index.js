@@ -1,6 +1,6 @@
-const SpotNotification = require("../index");
+var SpotNotification = require("../index");
 
-let spot = SpotNotification.SpotNotifier;
+var spot = SpotNotification.SpotNotifier;
 
 spot.on("termination", date => {
     console.log("termination", date);
