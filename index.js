@@ -53,11 +53,11 @@ var SpotNotification = (function (_super) {
     SpotNotification.prototype.checkStatus = function () {
         return new Promise(function (resolve, reject) {
             request.get("spot/termination-time", SpotNotification.requestOpts, function (error, response, body) {
-                if (error) {
-                    reject(error);
+                if (!error && response.statusCode === 200) {
+                    resolve(moment(body));
                 }
                 else {
-                    resolve(moment(body));
+                    reject(error);
                 }
             });
         });
@@ -65,11 +65,11 @@ var SpotNotification = (function (_super) {
     SpotNotification.prototype.instanceId = function () {
         return new Promise(function (resolve, reject) {
             request.get("instance-id", SpotNotification.requestOpts, function (error, response, body) {
-                if (error) {
-                    reject(error);
+                if (!error && response.statusCode === 200) {
+                    resolve(body);
                 }
                 else {
-                    resolve(body);
+                    reject(error);
                 }
             });
         });

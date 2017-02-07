@@ -50,11 +50,11 @@ export class SpotNotification extends EventEmitter {
     protected checkStatus(): Promise<any> {
         return new Promise((resolve, reject) => {
             request.get("spot/termination-time", SpotNotification.requestOpts, (error: null|Error, response: IncomingMessage, body: string) => {
-                if (error) {
-                    reject(error);
+                if (!error && response.statusCode === 200) {
+                    resolve(moment(body));
                 }
                 else {
-                    resolve(moment(body));
+                    reject(error);
                 }
             });
         });
@@ -63,11 +63,11 @@ export class SpotNotification extends EventEmitter {
     public instanceId(): Promise<any> {
         return new Promise((resolve, reject) => {
             request.get("instance-id", SpotNotification.requestOpts, (error: null|Error, response: IncomingMessage, body: string) => {
-                if (error) {
-                    reject(error);
+                if (!error && response.statusCode === 200) {
+                    resolve(body);
                 }
                 else {
-                    resolve(body);
+                    reject(error);
                 }
             });
         });
