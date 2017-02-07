@@ -54,7 +54,7 @@ export class SpotNotification extends EventEmitter {
                     resolve(moment(body));
                 }
                 else {
-                    reject(error);
+                    reject(error || response.statusCode);
                 }
             });
         });
@@ -67,7 +67,7 @@ export class SpotNotification extends EventEmitter {
                     resolve(body);
                 }
                 else {
-                    reject(error);
+                    reject(error || response.statusCode);
                 }
             });
         });

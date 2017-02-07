@@ -57,7 +57,7 @@ var SpotNotification = (function (_super) {
                     resolve(moment(body));
                 }
                 else {
-                    reject(error);
+                    reject(error || response.statusCode);
                 }
             });
         });
@@ -69,7 +69,7 @@ var SpotNotification = (function (_super) {
                     resolve(body);
                 }
                 else {
-                    reject(error);
+                    reject(error || response.statusCode);
                 }
             });
         });
