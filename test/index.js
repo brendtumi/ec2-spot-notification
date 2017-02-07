@@ -15,12 +15,11 @@ spot.on("termination-not-detected", function (error) {
 spot.instanceId()
     .then(function (id) {
         console.log("instanceId", id);
-        process.exit(0);
     })
     .catch(function (err) {
         console.error("instanceId", err);
     });
 
 setTimeout(function () {
-    process.exit(1);
+    process.exit(0);
 }, 20000);
