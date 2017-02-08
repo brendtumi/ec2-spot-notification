@@ -401,3 +401,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+/test/server.d.ts

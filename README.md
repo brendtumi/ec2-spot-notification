@@ -10,25 +10,25 @@ npm install --save ec2-spot-notification
 ```
 
 ### Example
-```javascript
-const SpotNotification = require("ec2-spot-notification");
-let spot = SpotNotification.SpotNotifier;
+```typescript
+import {SpotNotifier as spot} from "ec2-spot-notification";
 
-spot.on("termination", function (date) {
+spot.once("termination", date => {
     console.log("termination", date);
 });
-spot.on("termination-cancelled", function (date) {
+spot.once("termination-cancelled", date => {
     console.log("termination-cancelled", date);
 });
-spot.on("termination-not-detected", function (error) {
+spot.on("termination-not-detected", error => {
     console.log("termination-not-detected", error);
 });
 
 spot.instanceId()
-    .then(function (id) {
+    .then(id => {
         console.log("instanceId", id);
+        spot.start();
     })
-    .catch(function (err) {
+    .catch(err => {
         console.error("instanceId", err);
     });
 ```
@@ -39,9 +39,8 @@ ubuntu@ip-172-31-2-186:~/ec2-spot-notification$ npm run test-server
 instanceId i-05858013e
 termination-not-detected 404
 termination-not-detected 404
-termination moment("2017-02-08T12:49:14.000")
-termination moment("2017-02-08T12:49:14.000")
-termination moment("2017-02-08T12:49:14.000")
+termination-not-detected 404
+termination-not-detected 404
 termination moment("2017-02-08T12:49:14.000")
 
 Broadcast message from root@ip-172-31-2-186

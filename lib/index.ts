@@ -6,16 +6,13 @@ import moment = require("moment");
 import {format} from "url";
 import Moment = moment.Moment;
 import CoreOptions = request.CoreOptions;
+import {clearInterval} from "timers";
 
 export class SpotNotification extends EventEmitter {
     private beater: any;
 
     constructor() {
         super();
-
-        this.beater = setInterval(() => {
-            this.heartbeat();
-        }, 5000);
     }
 
     static get requestOpts(): CoreOptions {
@@ -31,9 +28,11 @@ export class SpotNotification extends EventEmitter {
     }
 
     protected heartbeat(): void {
+        let now = moment().add(1, "minute");
         this.checkStatus()
             .then((terminationTime: Moment) => {
-                if (terminationTime.isValid() && terminationTime.isSameOrAfter(moment())) {
+                if (terminationTime.isValid() && terminationTime.isSameOrAfter(now)) {
+                    // Termination scheduled
                     this.emit("termination", terminationTime);
                 }
                 else {
@@ -71,6 +70,18 @@ export class SpotNotification extends EventEmitter {
                 }
             });
         });
+    }
+
+    public start(): void {
+        this.beater = setInterval(() => {
+            this.heartbeat();
+        }, 5000);
+    }
+
+    public stop(): void {
+        if (this.beater) {
+            clearInterval(this.beater);
+        }
     }
 }
 
