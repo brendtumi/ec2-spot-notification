@@ -99,7 +99,7 @@ Broadcast message from root@ip-172-31-2-186
 
 ```
 
-#### My boss wants a license. So where is it?
+### My boss wants a license. So where is it?
 [MIT License](./LICENSE)
 
 [dependency-image]: https://david-dm.org/brendtumi/ec2-spot-notification.svg?style=flat-square
