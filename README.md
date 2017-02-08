@@ -33,6 +33,57 @@ spot.instanceId()
     });
 ```
 
+Production usage
+```javascript
+var SpotNotifier = require("ec2-spot-notification").SpotNotifier;
+var aws = require("aws-sdk");
+
+var instanceId = null;
+var elb = new aws.ELB();
+
+SpotNotifier.on("termination", function (date) {
+    console.log("Aws termination detected", date.toString());
+
+    elb.deregisterInstancesFromLoadBalancer({
+        Instances: [{InstanceId: instanceId}],
+        LoadBalancerName: "Nutcracker"
+    }, function (err, data) {
+        if (err)
+            console.error("deregisterInstancesFromLoadBalancer", err);
+        else {
+            console.log("deregisterInstancesFromLoadBalancer", data);
+            SpotNotifier.stop();
+        }
+    });
+
+});
+SpotNotifier.on("termination-cancelled", function (date) {
+    console.log("Aws termination cancelled for %s, restarting notifier", date.toString());
+
+    SpotNotifier.start();
+    elb.registerInstancesWithLoadBalancer({
+        Instances: [{InstanceId: instanceId}],
+        LoadBalancerName: "Nutcracker"
+    }, function (err, data) {
+        if (err)
+            console.error("deregisterInstancesFromLoadBalancer", err);
+        else {
+            console.log("deregisterInstancesFromLoadBalancer", data);
+        }
+    });
+
+});
+SpotNotifier.instanceId()
+    .then(function (iId) {
+        console.log("Aws Spot Notification instanceId", iId);
+        instanceId = iId;
+        SpotNotifier.start();
+    })
+    .catch(function (err) {
+        console.error("Aws Spot Notification instanceId", err);
+    });
+```
+
 #### Test
 ```bash
 ubuntu@ip-172-31-2-186:~/ec2-spot-notification$ npm run test-server
