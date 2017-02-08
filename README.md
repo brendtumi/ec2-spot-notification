@@ -33,7 +33,7 @@ spot.instanceId()
     });
 ```
 
-Production usage
+#### Production usage
 ```javascript
 var SpotNotifier = require("ec2-spot-notification").SpotNotifier;
 var aws = require("aws-sdk");
