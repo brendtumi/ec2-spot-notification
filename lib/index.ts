@@ -50,6 +50,7 @@ export class SpotNotification extends EventEmitter {
         return new Promise((resolve, reject) => {
             request.get("spot/termination-time", SpotNotification.requestOpts, (error: null|Error, response: IncomingMessage, body: string) => {
                 if (!error && response.statusCode === 200) {
+                    // TODO: check value is date string or not
                     resolve(moment(body));
                 }
                 else {
