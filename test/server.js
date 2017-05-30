@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../lib/index");
 index_1.SpotNotifier.start();
 index_1.SpotNotifier.once("termination", function (date) {

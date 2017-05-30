@@ -4,6 +4,12 @@
   "description": "AWS EC2 Spot Instance Termination Notices",
   "main": "./lib/index.js",
   "scripts": {
+    "lint": "tslint src/**/*.ts --config tslint.json --project tsconfig.json --fix",
+    "tsc": "tsc",
+    "build": "npm run lint && npm run tsc",
+    "preversion": "npm run build",
+    "version": "git add -A lib",""
+    "postversion": "git push && git push --tags",
     "test-server": "node ./test/server.js"
   },
   "typings": "./lib/index.d.ts",
@@ -31,8 +37,10 @@
     "@types/request": "0.0.39"
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "moment": "^2.17.1",
-    "request": "^2.79.0"
+    "@types/bluebird": "^3.5.4",
+    "@types/node": "^7.0.22",
+    "bluebird": "^3.5.0",
+    "moment": "^2.18.1",
+    "request": "^2.81.0"
   }
 }

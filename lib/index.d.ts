@@ -1,5 +1,5 @@
-/// <reference types="request" />
 /// <reference types="node" />
+/// <reference types="request" />
 /// <reference types="bluebird" />
 import { EventEmitter } from "events";
 import Promise = require("bluebird");

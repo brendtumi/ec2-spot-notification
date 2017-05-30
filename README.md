@@ -99,6 +99,10 @@ Broadcast message from root@ip-172-31-2-186
 
 ```
 
+## Contributors
+We welcome contributions of all kinds from anyone. 
+* Author: [Tümay Çeber](https://github.com/brendtumi) [![](https://img.shields.io/gratipay/user/brendtumi.svg)]()
+
 ### My boss wants a license. So where is it?
 [MIT License](./LICENSE)
 
