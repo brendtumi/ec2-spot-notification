@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "build": "npm run lint && npm run tsc",
     "preversion": "npm run build",
-    "version": "git add -A lib",""
+    "version": "git add -A lib",
     "postversion": "git push && git push --tags",
     "test-server": "node ./test/server.js"
   },
