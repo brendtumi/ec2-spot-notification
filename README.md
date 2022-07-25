@@ -22,6 +22,9 @@ spot.once("termination-cancelled", date => {
 spot.on("termination-not-detected", error => {
     console.log("termination-not-detected", error);
 });
+spot.on("instance-termination", error => {
+    console.log("termination-not-detected", error);
+});
 
 spot.instanceId()
     .then(id => {

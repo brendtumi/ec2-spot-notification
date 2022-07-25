@@ -10,9 +10,11 @@ import {clearInterval} from "timers";
 
 export class SpotNotification extends EventEmitter {
     private beater: any;
+    private shouldCheckInstanceStatus: boolean;
 
-    constructor() {
+    constructor(_shouldCheckInstanceStatus:boolean = false) {
         super();
+        this.shouldCheckInstanceStatus = _shouldCheckInstanceStatus;
     }
 
     static get requestOpts(): CoreOptions {
@@ -30,7 +32,7 @@ export class SpotNotification extends EventEmitter {
     protected heartbeat(): void {
         let now = moment().add(1, "minute");
         this.checkStatus()
-            .then((terminationTime: Moment) => {
+            .then(([terminationTime, instanceStatus]: [Moment, string]) => {
                 if (terminationTime.isValid() && terminationTime.isSameOrAfter(now)) {
                     // Termination scheduled
                     this.emit("termination", terminationTime);
@@ -38,6 +40,9 @@ export class SpotNotification extends EventEmitter {
                 else {
                     // Termination cancelled
                     this.emit("termination-cancelled", terminationTime);
+                }
+                if (instanceStatus === "Terminated") {
+                    this.emit("instance-termination", instanceStatus);
                 }
             })
             .catch((error: Error) => {
@@ -47,11 +52,34 @@ export class SpotNotification extends EventEmitter {
     }
 
     protected checkStatus(): Promise<any> {
+        const jobs = [
+            this.checkSpotStatus()
+        ];
+        if (this.shouldCheckInstanceStatus) {
+            jobs.push(this.checkInstanceStatus())
+        }
+        return Promise.all(jobs);
+    }
+
+    protected checkSpotStatus(): Promise<any> {
         return new Promise((resolve, reject) => {
             request.get("spot/termination-time", SpotNotification.requestOpts, (error: null|Error, response: IncomingMessage, body: string) => {
                 if (!error && response.statusCode === 200) {
                     // TODO: check value is date string or not
                     resolve(moment(body));
+                }
+                else {
+                    reject(error || response.statusCode);
+                }
+            });
+        });
+    }
+
+    protected checkInstanceStatus(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            request.get("autoscaling/target-lifecycle-state", SpotNotification.requestOpts, (error: null|Error, response: IncomingMessage, body: string) => {
+                if (!error && response.statusCode === 200) {
+                    resolve(String(body));
                 }
                 else {
                     reject(error || response.statusCode);
