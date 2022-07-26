@@ -33,11 +33,10 @@ export class SpotNotification extends EventEmitter {
         let now = moment().add(1, "minute");
         this.checkStatus()
             .then(([terminationTime, instanceStatus]: [Moment, string]) => {
-                if (terminationTime.isValid() && terminationTime.isSameOrAfter(now)) {
+                if (terminationTime && terminationTime.isValid() && terminationTime.isSameOrAfter(now)) {
                     // Termination scheduled
                     this.emit("termination", terminationTime);
-                }
-                else {
+                } else if (terminationTime) {
                     // Termination cancelled
                     this.emit("termination-cancelled", terminationTime);
                 }
@@ -67,6 +66,8 @@ export class SpotNotification extends EventEmitter {
                 if (!error && response.statusCode === 200) {
                     // TODO: check value is date string or not
                     resolve(moment(body));
+                } else if (response.statusCode === 404) {
+                    resolve(null);
                 }
                 else {
                     reject(error || response.statusCode);
