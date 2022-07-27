@@ -1,7 +1,7 @@
 # EC2 Spot Instance Termination Notifier
 AWS EC2 Spot Instance Termination Notices for NodeJs
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Dependency Status][dependency-image]][dependency-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] 
 
 ### Installation
 Install with [npm](http://github.com/isaacs/npm):
@@ -104,13 +104,11 @@ Broadcast message from root@ip-172-31-2-186
 
 ## Contributors
 We welcome contributions of all kinds from anyone. 
-* Author: [Tümay Çeber](https://github.com/brendtumi) [![](https://img.shields.io/gratipay/user/brendtumi.svg)](https://gratipay.com/brendtumi/)
+* Author: [Tümay Çeber](https://github.com/brendtumi)
 
 ### My boss wants a license. So where is it?
 [MIT License](./LICENSE)
 
-[dependency-image]: https://david-dm.org/brendtumi/ec2-spot-notification.svg?style=flat-square
 [downloads-image]: http://img.shields.io/npm/dm/ec2-spot-notification.svg?style=flat-square
 [npm-image]: https://img.shields.io/npm/v/ec2-spot-notification.svg?style=flat-square
-[dependency-url]: https://david-dm.org/brendtumi/ec2-spot-notification
 [npm-url]: https://npmjs.org/package/ec2-spot-notification
