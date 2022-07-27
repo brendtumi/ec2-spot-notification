@@ -7,10 +7,13 @@ import request = require("request");
 import CoreOptions = request.CoreOptions;
 export declare class SpotNotification extends EventEmitter {
     private beater;
-    constructor();
-    static readonly requestOpts: CoreOptions;
+    private shouldCheckInstanceStatus;
+    constructor(_shouldCheckInstanceStatus?: boolean);
+    static readonly get requestOpts(): CoreOptions;
     protected heartbeat(): void;
     protected checkStatus(): Promise<any>;
+    protected checkSpotStatus(): Promise<any>;
+    protected checkInstanceStatus(): Promise<any>;
     instanceId(): Promise<any>;
     start(): void;
     stop(): void;
