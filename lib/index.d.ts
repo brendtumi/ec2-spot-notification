@@ -1,6 +1,4 @@
 /// <reference types="node" />
-/// <reference types="request" />
-/// <reference types="bluebird" />
 import { EventEmitter } from "events";
 import Promise = require("bluebird");
 import request = require("request");
@@ -9,7 +7,7 @@ export declare class SpotNotification extends EventEmitter {
     private beater;
     private shouldCheckInstanceStatus;
     constructor(_shouldCheckInstanceStatus?: boolean);
-    static readonly get requestOpts(): CoreOptions;
+    static get requestOpts(): CoreOptions;
     protected heartbeat(): void;
     protected checkStatus(): Promise<any>;
     protected checkSpotStatus(): Promise<any>;
